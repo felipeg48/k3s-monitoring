@@ -1,0 +1,31 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: arm32v7/busybox:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "64Mi"
+        cpu: "150m"
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/OTHER && exit 0 || exit 1"
+    volumeMounts:
+      - name: nfs-volume
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs-volume
+      persistentVolumeClaim:
+        claimName: test-claim
+      # nfs:
+      #   server: 192.168.1.42
+      #   path: /ssd
