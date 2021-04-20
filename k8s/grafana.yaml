@@ -46,7 +46,7 @@ spec:
       - name: grafana-nfs-volume
         nfs:
           server: 192.168.1.42
-          path: /ssd
+          path: /ssd/grafana
 ---
 apiVersion: v1
 kind: Service
@@ -61,6 +61,7 @@ spec:
     name: grafana
     protocol: TCP
     targetPort: 3000
+  type: LoadBalancer
 
 # ---
 # apiVersion: traefik.containo.us/v1alpha1
